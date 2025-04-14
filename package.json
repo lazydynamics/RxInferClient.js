@@ -1,6 +1,6 @@
 {
   "name": "@lazydynamics/rxinfer-client",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A client to connect to RxInferServer",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

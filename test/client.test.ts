@@ -1,20 +1,20 @@
 import { RxInferClient } from '../src';
+import { pingServer } from '../src';
+import { Client } from '../src';
 
 describe('RxInferClient', () => {
-  let client: RxInferClient;
+  let client: Client;
 
-  beforeEach(() => {
-    client = new RxInferClient();
+  beforeEach(async () => {
+    client = await RxInferClient.create();
   });
 
   it('should instantiate the client', () => {
-    expect(client).toBeInstanceOf(RxInferClient);
+    expect(client).toBeDefined();
   });
 
   it('should ping the server', async () => {
-    // Mock the ping method if it exists in your client
-    // This is a placeholder test that will need to be updated
-    // once the OpenAPI client is generated
-    expect(client).toBeDefined();
+    const response = await pingServer({ client });
+    expect(response.data).toEqual({ status: 'ok' });
   });
 }); 

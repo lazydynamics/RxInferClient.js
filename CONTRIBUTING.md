@@ -91,42 +91,32 @@ constructor(options?: ClientOptions) {
 3. Have the necessary permissions to publish packages
 4. Have a GitHub token with `repo` scope (for semantic-release)
 
-### Publishing Steps
-1. Login to npm:
-   ```bash
-   npm login
-   ```
-
-2. Build the package:
-   ```bash
-   npm run build
-   ```
-
-3. Make a release:
-   ```bash
-   npm run release
-   ```
-   This will:
-   - Determine the next version number based on commit messages
-   - Update package.json
-   - Create a git tag
-   - Publish to npm
-   - Create a GitHub release
+### Publishing Process
+The package uses automated releases through GitHub Actions. When changes are merged into the `main` branch:
+1. The CI pipeline runs tests and verifies the OpenAPI client generation
+2. If all checks pass, semantic-release automatically:
+   - Determines the next version number based on PR titles
+   - Updates package.json
+   - Creates a git tag
+   - Publishes to npm
+   - Creates a GitHub release
 
 ### Version Management
-The project uses semantic-release for automated version management. Version numbers are determined by commit messages:
-- `fix:` commits trigger patch releases (1.0.0 → 1.0.1)
-- `feat:` commits trigger minor releases (1.0.0 → 1.1.0)
-- Commits with `BREAKING CHANGE:` trigger major releases (1.0.0 → 2.0.0)
+The project uses semantic-release for automated version management. Version numbers are determined by PR titles:
+- `fix:` PRs trigger patch releases (1.0.0 → 1.0.1)
+- `feat:` PRs trigger minor releases (1.0.0 → 1.1.0)
+- PRs with `BREAKING CHANGE:` trigger major releases (1.0.0 → 2.0.0)
 
-Example commit messages:
-```bash
-git commit -m "fix: handle null values in response"
-git commit -m "feat: add support for custom headers"
-git commit -m "feat: add new API endpoint
-
-BREAKING CHANGE: remove deprecated method"
+Example PR titles:
 ```
+fix: handle null values in response
+feat: add support for custom headers
+feat: add new API endpoint
+
+BREAKING CHANGE: remove deprecated method
+```
+
+Note: Releases only happen when changes are merged into the `main` branch. Make sure your PR titles follow the conventional commit format as they determine the version bump.
 
 ## Code Style and Guidelines
 
@@ -141,10 +131,10 @@ BREAKING CHANGE: remove deprecated method"
 1. Create a new branch for your feature/fix
 2. Make your changes
 3. Run tests (when available)
-4. Submit a pull request
+4. Submit a pull request with a descriptive title following the conventional commit format
 
-### Commit Messages
-Follow conventional commits:
+### PR Titles
+Follow conventional commits format for PR titles:
 - `feat:` for new features
 - `fix:` for bug fixes
 - `docs:` for documentation changes

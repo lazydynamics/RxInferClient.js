@@ -1,10 +1,21 @@
 {
   "name": "@lazydynamics/rxinfer-client",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A client to connect to RxInferServer",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "browser": "dist/index.browser.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc && npm run build:browser",
+    "build:browser": "esbuild src/index.ts --bundle --platform=browser --outfile=dist/index.browser.js --format=esm",
+    "generate": "openapi-ts",
+    "docs": "node scripts/wait-for-server.js && typedoc --out docs/build src",
+    "docs:serve": "npx serve docs",
+    "test": "node scripts/wait-for-server.js && jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -18,5 +29,19 @@
   "homepage": "https://github.com/lazydynamics/RxInferClient.js#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.10.0",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.66.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.11.24",
+    "esbuild": "^0.20.2",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.2",
+    "typedoc": "^0.28.2",
+    "typescript": "^5.3.3"
   }
 }

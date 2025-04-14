@@ -14,7 +14,8 @@
     "docs:serve": "npx serve docs",
     "test": "node scripts/wait-for-server.js && jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "release": "semantic-release"
   },
   "repository": {
     "type": "git",

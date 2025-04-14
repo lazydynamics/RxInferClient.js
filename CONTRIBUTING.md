@@ -89,6 +89,7 @@ constructor(options?: ClientOptions) {
 1. Have an npm account
 2. Be a member of the @lazydynamics organization
 3. Have the necessary permissions to publish packages
+4. Have a GitHub token with `repo` scope (for semantic-release)
 
 ### Publishing Steps
 1. Login to npm:
@@ -101,16 +102,31 @@ constructor(options?: ClientOptions) {
    npm run build
    ```
 
-3. Publish the package:
+3. Make a release:
    ```bash
-   npm publish
+   npm run release
    ```
+   This will:
+   - Determine the next version number based on commit messages
+   - Update package.json
+   - Create a git tag
+   - Publish to npm
+   - Create a GitHub release
 
 ### Version Management
-Use semantic versioning for releases:
-- `npm version patch` for bug fixes
-- `npm version minor` for new features
-- `npm version major` for breaking changes
+The project uses semantic-release for automated version management. Version numbers are determined by commit messages:
+- `fix:` commits trigger patch releases (1.0.0 → 1.0.1)
+- `feat:` commits trigger minor releases (1.0.0 → 1.1.0)
+- Commits with `BREAKING CHANGE:` trigger major releases (1.0.0 → 2.0.0)
+
+Example commit messages:
+```bash
+git commit -m "fix: handle null values in response"
+git commit -m "feat: add support for custom headers"
+git commit -m "feat: add new API endpoint
+
+BREAKING CHANGE: remove deprecated method"
+```
 
 ## Code Style and Guidelines
 

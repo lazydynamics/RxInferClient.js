@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const axios = require('axios');
 const { setTimeout } = require('timers/promises');
 
 const isRunningInCI = () => {
@@ -29,10 +28,13 @@ const waitForServer = async (timeout = null, retryInterval = null) => {
   
   while (Date.now() - startTime < timeout * 1000) {
     try {
-      const response = await axios.get('http://localhost:8000/v1/ping');
-      if (response.data.status === 'ok') {
-        console.log("RxInferServer is available!");
-        return true;
+      const response = await fetch('http://localhost:8000/v1/ping');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status === 'ok') {
+          console.log("RxInferServer is available!");
+          return true;
+        }
       }
     } catch (error) {
       // Ignore errors and retry

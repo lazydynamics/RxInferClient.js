@@ -2,6 +2,7 @@
 
 import type { Options as ClientOptions, TDataShape, Client } from '@hey-api/client-fetch';
 import type { GetServerInfoData, GetServerInfoResponse, GetServerInfoError, PingServerData, PingServerResponse, TokenGenerateData, TokenGenerateResponse2, TokenGenerateError, TokenRolesData, TokenRolesResponse2, TokenRolesError, GetAvailableModelsData, GetAvailableModelsResponse, GetAvailableModelsError, GetAvailableModelData, GetAvailableModelResponse, GetAvailableModelError, CreateModelInstanceData, CreateModelInstanceResponse2, CreateModelInstanceError, GetModelInstancesData, GetModelInstancesResponse, GetModelInstancesError, DeleteModelInstanceData, DeleteModelInstanceResponse, DeleteModelInstanceError, GetModelInstanceData, GetModelInstanceResponse, GetModelInstanceError, GetModelInstanceStateData, GetModelInstanceStateResponse, GetModelInstanceStateError, GetModelInstanceParametersData, GetModelInstanceParametersResponse, GetModelInstanceParametersError, RunInferenceData, RunInferenceResponse, RunInferenceError, RunLearningData, RunLearningResponse, RunLearningError, CreateEpisodeData, CreateEpisodeResponse, CreateEpisodeError, GetEpisodesData, GetEpisodesResponse, GetEpisodesError, DeleteEpisodeData, DeleteEpisodeResponse, DeleteEpisodeError, GetEpisodeInfoData, GetEpisodeInfoResponse, GetEpisodeInfoError, AttachEventsToEpisodeData, AttachEventsToEpisodeResponse, AttachEventsToEpisodeError, WipeEpisodeData, WipeEpisodeResponse, WipeEpisodeError, AttachMetadataToEventData, AttachMetadataToEventResponse, AttachMetadataToEventError } from './types.gen';
+import { zGetServerInfoResponse, zPingServerResponse, zTokenGenerateResponse2, zTokenRolesResponse2, zGetAvailableModelsResponse, zGetAvailableModelResponse, zCreateModelInstanceResponse2, zGetModelInstancesResponse, zDeleteModelInstanceResponse, zGetModelInstanceResponse, zGetModelInstanceStateResponse, zGetModelInstanceParametersResponse, zRunInferenceResponse, zRunLearningResponse, zCreateEpisodeResponse, zGetEpisodesResponse, zDeleteEpisodeResponse, zGetEpisodeInfoResponse, zAttachEventsToEpisodeResponse, zWipeEpisodeResponse, zAttachMetadataToEventResponse } from './zod.gen';
 import { client as _heyApiClient } from './client.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = ClientOptions<TData, ThrowOnError> & {
@@ -30,6 +31,9 @@ export const getServerInfo = <ThrowOnError extends boolean = false>(options?: Op
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetServerInfoResponse.parseAsync(data);
+        },
         url: '/info',
         ...options
     });
@@ -41,6 +45,9 @@ export const getServerInfo = <ThrowOnError extends boolean = false>(options?: Op
  */
 export const pingServer = <ThrowOnError extends boolean = false>(options?: Options<PingServerData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<PingServerResponse, unknown, ThrowOnError>({
+        responseValidator: async (data) => {
+            return await zPingServerResponse.parseAsync(data);
+        },
         url: '/ping',
         ...options
     });
@@ -52,6 +59,9 @@ export const pingServer = <ThrowOnError extends boolean = false>(options?: Optio
  */
 export const tokenGenerate = <ThrowOnError extends boolean = false>(options?: Options<TokenGenerateData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).post<TokenGenerateResponse2, TokenGenerateError, ThrowOnError>({
+        responseValidator: async (data) => {
+            return await zTokenGenerateResponse2.parseAsync(data);
+        },
         url: '/token/generate',
         ...options
     });
@@ -69,6 +79,9 @@ export const tokenRoles = <ThrowOnError extends boolean = false>(options?: Optio
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zTokenRolesResponse2.parseAsync(data);
+        },
         url: '/token/roles',
         ...options
     });
@@ -91,6 +104,9 @@ export const getAvailableModels = <ThrowOnError extends boolean = false>(options
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetAvailableModelsResponse.parseAsync(data);
+        },
         url: '/models/available',
         ...options
     });
@@ -108,6 +124,9 @@ export const getAvailableModel = <ThrowOnError extends boolean = false>(options:
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetAvailableModelResponse.parseAsync(data);
+        },
         url: '/models/available/{model_name}',
         ...options
     });
@@ -125,6 +144,9 @@ export const createModelInstance = <ThrowOnError extends boolean = false>(option
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zCreateModelInstanceResponse2.parseAsync(data);
+        },
         url: '/models/create-instance',
         ...options,
         headers: {
@@ -146,6 +168,9 @@ export const getModelInstances = <ThrowOnError extends boolean = false>(options?
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetModelInstancesResponse.parseAsync(data);
+        },
         url: '/models/instances',
         ...options
     });
@@ -163,6 +188,9 @@ export const deleteModelInstance = <ThrowOnError extends boolean = false>(option
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zDeleteModelInstanceResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}',
         ...options
     });
@@ -180,6 +208,9 @@ export const getModelInstance = <ThrowOnError extends boolean = false>(options: 
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetModelInstanceResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}',
         ...options
     });
@@ -197,6 +228,9 @@ export const getModelInstanceState = <ThrowOnError extends boolean = false>(opti
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetModelInstanceStateResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/state',
         ...options
     });
@@ -214,6 +248,9 @@ export const getModelInstanceParameters = <ThrowOnError extends boolean = false>
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetModelInstanceParametersResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/parameters',
         ...options
     });
@@ -231,6 +268,9 @@ export const runInference = <ThrowOnError extends boolean = false>(options: Opti
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zRunInferenceResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/infer',
         ...options,
         headers: {
@@ -252,6 +292,9 @@ export const runLearning = <ThrowOnError extends boolean = false>(options: Optio
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zRunLearningResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/learn',
         ...options,
         headers: {
@@ -276,6 +319,9 @@ export const createEpisode = <ThrowOnError extends boolean = false>(options: Opt
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zCreateEpisodeResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/create-episode',
         ...options,
         headers: {
@@ -297,6 +343,9 @@ export const getEpisodes = <ThrowOnError extends boolean = false>(options: Optio
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetEpisodesResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/episodes',
         ...options
     });
@@ -317,6 +366,9 @@ export const deleteEpisode = <ThrowOnError extends boolean = false>(options: Opt
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zDeleteEpisodeResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/episodes/{episode_name}',
         ...options
     });
@@ -334,6 +386,9 @@ export const getEpisodeInfo = <ThrowOnError extends boolean = false>(options: Op
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zGetEpisodeInfoResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/episodes/{episode_name}',
         ...options
     });
@@ -351,6 +406,9 @@ export const attachEventsToEpisode = <ThrowOnError extends boolean = false>(opti
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zAttachEventsToEpisodeResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/episodes/{episode_name}/attach-events',
         ...options,
         headers: {
@@ -372,6 +430,9 @@ export const wipeEpisode = <ThrowOnError extends boolean = false>(options: Optio
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zWipeEpisodeResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/episodes/{episode_name}/wipe',
         ...options
     });
@@ -389,6 +450,9 @@ export const attachMetadataToEvent = <ThrowOnError extends boolean = false>(opti
                 type: 'http'
             }
         ],
+        responseValidator: async (data) => {
+            return await zAttachMetadataToEventResponse.parseAsync(data);
+        },
         url: '/models/i/{instance_id}/episodes/{episode_name}/events/{event_id}/attach-metadata',
         ...options,
         headers: {

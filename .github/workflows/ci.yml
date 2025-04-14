@@ -5,7 +5,7 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Permissions needed to push to gh-pages and create releases
+# Permissions needed to push to gh-pages
 permissions:
   contents: write
   pages: write
@@ -78,35 +78,6 @@ jobs:
         make dev &
         cd ..
         npm test
-
-  release:
-    needs: [openapi-client-generation, test]
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Configure Git
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "github-actions@github.com"
-    
-    - name: Release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npm run release
 
   docs:
     runs-on: ubuntu-latest

@@ -89,34 +89,51 @@ constructor(options?: ClientOptions) {
 1. Have an npm account
 2. Be a member of the @lazydynamics organization
 3. Have the necessary permissions to publish packages
-4. Have a GitHub token with `repo` scope (for semantic-release)
 
-### Publishing Process
-The package uses automated releases through GitHub Actions. When changes are merged into the `main` branch:
-1. The CI pipeline runs tests and verifies the OpenAPI client generation
-2. If all checks pass, semantic-release automatically:
-   - Determines the next version number based on PR titles
-   - Updates package.json
-   - Creates a git tag
-   - Publishes to npm
-   - Creates a GitHub release
+### Publishing Steps
+1. Login to npm:
+   ```bash
+   npm login
+   ```
+
+2. Build the package:
+   ```bash
+   npm run build
+   ```
+
+3. Update the version in package.json:
+   ```bash
+   npm version <patch|minor|major>
+   ```
+   This will:
+   - Update the version in package.json
+   - Create a git tag
+   - Commit the changes
+
+4. Push the changes and tag:
+   ```bash
+   git push && git push --tags
+   ```
+
+5. Publish the package:
+   ```bash
+   npm publish
+   ```
+
+6. Create a GitHub release:
+   - Go to the repository's Releases page on GitHub
+   - Click "Create a new release"
+   - Select the tag that was just created
+   - Add release notes describing the changes
+   - Click "Publish release"
+
+Note: After publishing to npm, it's important to create a corresponding GitHub release to maintain consistency between npm and GitHub.
 
 ### Version Management
-The project uses semantic-release for automated version management. Version numbers are determined by PR titles:
-- `fix:` PRs trigger patch releases (1.0.0 → 1.0.1)
-- `feat:` PRs trigger minor releases (1.0.0 → 1.1.0)
-- PRs with `BREAKING CHANGE:` trigger major releases (1.0.0 → 2.0.0)
-
-Example PR titles:
-```
-fix: handle null values in response
-feat: add support for custom headers
-feat: add new API endpoint
-
-BREAKING CHANGE: remove deprecated method
-```
-
-Note: Releases only happen when changes are merged into the `main` branch. Make sure your PR titles follow the conventional commit format as they determine the version bump.
+Use semantic versioning for releases:
+- `npm version patch` for bug fixes (1.0.0 → 1.0.1)
+- `npm version minor` for new features (1.0.0 → 1.1.0)
+- `npm version major` for breaking changes (1.0.0 → 2.0.0)
 
 ## Code Style and Guidelines
 
@@ -131,17 +148,13 @@ Note: Releases only happen when changes are merged into the `main` branch. Make 
 1. Create a new branch for your feature/fix
 2. Make your changes
 3. Run tests (when available)
-4. Submit a pull request with a descriptive title following the conventional commit format
+4. Submit a pull request
 
-### PR Titles
-Follow conventional commits format for PR titles:
-- `feat:` for new features
-- `fix:` for bug fixes
-- `docs:` for documentation changes
-- `style:` for code style changes
-- `refactor:` for code refactoring
-- `test:` for test-related changes
-- `chore:` for maintenance tasks
+### Commit Messages
+Keep commit messages clear and descriptive:
+- Use present tense
+- Start with a capital letter
+- Be specific about what changed
 
 ## Getting Help
 

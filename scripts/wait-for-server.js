@@ -19,7 +19,7 @@ const isRunningInCI = () => {
 
 const waitForServer = async (timeout = null, retryInterval = null) => {
   const isCI = isRunningInCI();
-  timeout = timeout || (isCI ? 300 : 30);  // 5 minutes in CI, 30 seconds locally
+  timeout = timeout || (isCI ? 600 : 30);  // 10 minutes in CI, 30 seconds locally
   retryInterval = retryInterval || (isCI ? 10 : 1);  // 10 seconds in CI, 1 second locally
   
   const startTime = Date.now();

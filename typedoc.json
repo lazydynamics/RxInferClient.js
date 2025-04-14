@@ -1,6 +1,6 @@
 {
   "entryPoints": ["src/index.ts"],
-  "out": "docs",
+  "out": "docs/build",
   "name": "RxInfer Client",
   "readme": "README.md",
   "theme": "default",
